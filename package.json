@@ -1,0 +1,16 @@
+{
+  "name": "img-lightbox",
+  "version": "1.0.0",
+  "description": "Web component to create a lightbox effect",
+  "main": "src/img-lightbox.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/img-lightbox.js"
+  },
+  "author": "dkvz",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-clean-dist": "0.0.6"
+  }
+}
