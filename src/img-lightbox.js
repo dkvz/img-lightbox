@@ -2,6 +2,7 @@ class ImgLightbox extends HTMLElement {
 
   constructor() {
     super();
+    this.loading = false;
   }
 
   connectedCallback() {
@@ -44,6 +45,21 @@ class ImgLightbox extends HTMLElement {
     // Preload the full image.
     // Show the spinner overlay:
     this.showLoaderOverlay();
+    const img = new Image();
+    img.src = this.fullImage;
+    img.addEventListener('load', () => this.showImage(img));
+  }
+
+  showImage(img) {
+    // Implement some kind of lock:
+
+    // Add the overlay if it doesn't exist:
+    if (!this.overlay) {
+      // Create the overlay with a whole bunch
+      // of inline styles.
+      // I'm so sorry.
+      
+    }
   }
 
   showLoaderOverlay() {
