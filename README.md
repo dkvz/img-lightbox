@@ -109,9 +109,9 @@ if (event.altKey)
 
 ## TODO
 - [ ] Test on all browsers
-- [ ] Write tests
+- [ ] Write tests - Gotta do research on how to test web components
 - [x] Don't forget to register the keyboard events
-- [ ] Use template tags, they say it's better (here)[https://github.com/GoogleChromeLabs/howto-components/blob/master/elements/howto-checkbox/howto-checkbox.js]
+- [x] Use template tags, they say it's better (here)[https://github.com/GoogleChromeLabs/howto-components/blob/master/elements/howto-checkbox/howto-checkbox.js]
 - [ ] Document how to check for web component browser support
 - [x] Disable overflow on the fullscreen overlay
 - [x] Make a shadow DOM version
