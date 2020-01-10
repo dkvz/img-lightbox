@@ -11,7 +11,11 @@ class ImgLightbox extends HTMLElement {
   connectedCallback() {
     // Template is added to prototype below the 
     // class definition.
-    this.shadowRoot.innerHTML = this.template;
+    // It's from a template tag because it's 
+    // supposed to be faster this way.
+    this.shadowRoot.appendChild(
+      this.template.content.cloneNode(true)
+    );
     // Get some element references from shadow DOM:
     this.overlay = this.shadowRoot.querySelector('#overlay');
     this.loadingOverlay = this.shadowRoot.querySelector('#loader');
@@ -109,11 +113,13 @@ class ImgLightbox extends HTMLElement {
 
 }
 
-// The loader image should be cached, inlining it
-// will create tons of copies of SVG nodes.
+// I'm using a true template tag because the Chrome
+// team says it's faster. The template tag has 
+// better browser support than web components anyway.
 // The strange comment here is needed for syntax
 // highlighting with a VS Code extension I'm using.
-ImgLightbox.prototype.template = /*template*/`
+const tpl = document.createElement('template');
+tpl.innerHTML = /*template*/`
 <style>
   :host {
     display: inline-block;
@@ -171,5 +177,6 @@ ImgLightbox.prototype.template = /*template*/`
   <img src="${loaderSvgUrl}">
 </div>
 `;
+ImgLightbox.prototype.template = tpl;
 
 export default ImgLightbox;

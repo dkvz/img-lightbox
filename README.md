@@ -3,10 +3,10 @@ Web Component with no dependencies to make a lightbox effect around images.
 
 The idea is that it should still display the image and link to the full sized one if JS is disabled, hasn't loaded for some reason, or if web components are not supported.
 
-I quickly wrote this in regard to a blog article I was writing, it could be improved **a lot**.
+I quickly made this in regard to a blog article I was writing, it could be improved **a lot**.
 
 ## Build requirements
-* NodeJS
+* Node.js
 
 ## Installing dependencies
 Run:
