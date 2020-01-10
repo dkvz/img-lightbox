@@ -3,9 +3,11 @@ class ImgLightbox extends HTMLElement {
   constructor() {
     super();
     this.loading = false;
+    this.attachShadow({mode: 'open'});
   }
 
   connectedCallback() {
+    this.shadowRoot.innerHTML = this.template;
     const link = this.querySelector('a');
     const img = this.querySelector('img');
     if (link) {
@@ -118,7 +120,18 @@ class ImgLightbox extends HTMLElement {
 
 }
 
+ImgLightbox.prototype.template = /*template*/`
+<style>
+  :host {
+    display: inline-block;
+  }
+</style>
+<slot />
+`;
+
 // I could not inline the SVG with Parcel, so I copied it here.
+// That should be optimized at a later date as I'm also copying it to 
+// the shadow DOM version.
 ImgLightbox.prototype.loaderSvg = `
 <svg enable-background="new 0 0 64 64" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><metadata><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata>
 <g>
