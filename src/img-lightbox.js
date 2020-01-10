@@ -42,24 +42,70 @@ class ImgLightbox extends HTMLElement {
 
   showLightbox(e) {
     e.preventDefault();
-    // Preload the full image.
-    // Show the spinner overlay:
-    this.showLoaderOverlay();
-    const img = new Image();
-    img.src = this.fullImage;
-    img.addEventListener('load', () => this.showImage(img));
+    // Implement some kind of lock:
+    if (!this.loading) {
+      this.loading = true;
+      // Preload the full image.
+      // Show the spinner overlay:
+      this.showLoaderOverlay();
+      if (!this.img) {
+        this.img = new Image();
+        this.img.src = this.fullImage;
+        this.img.addEventListener('load', () => this.showImage(this.img));
+      } else {
+        this.showImage(this.img);
+      }
+    }
   }
 
   showImage(img) {
-    // Implement some kind of lock:
 
     // Add the overlay if it doesn't exist:
     if (!this.overlay) {
       // Create the overlay with a whole bunch
       // of inline styles.
       // I'm so sorry.
-      
+      this.overlay = document.createElement('div');
+      this.overlay.style.position = 'fixed';
+      this.overlay.style.top = '0';
+      this.overlay.style.left = '0';
+      this.overlay.style.bottom = '0';
+      this.overlay.style.right = '0';
+      this.overlay.style.overflow = 'hidden';
+      this.overlay.style.zIndex = 999;
+      this.overlay.style.backgroundColor = 'rgba(0,0,0,.5)';
+      this.overlay.style.display = 'none';
+      this.overlay.style.alignItems = 'center';
+      this.overlay.style.justifyContent = 'center';
+      this.overlay.tabIndex = 0;
+
+      // Add the image + transition
+      img.style.maxWidth = '100%';
+      img.style.maxHeight = '100%';
+      img.style.transition = 'transform 0.8s';
+      img.tabIndex = 1;
+      this.overlay.appendChild(img);
+
+      // Prepare the events to close the overlay:
+      const closeOverlay = (e) =>         
+        e.currentTarget.style.display = 'none';
+      ['click', 'keydown'].forEach(
+        (type) => this.overlay.addEventListener(type, closeOverlay)
+      );
+
+      this.appendChild(this.overlay);
     }
+    img.style.transform = 'scale(0.1)';
+    // Hide the loading overlay:
+    this.hideLoaderOverlay();
+    this.overlay.style.display = 'flex';
+    // Focus the overlay (requires it to have a tabIndex):
+    this.overlay.focus();
+    // Start the CSS transition:
+    img.style.transform = 'scale(1)';
+
+    // Don't forget to unlock the click event:
+    this.loading = false;
   }
 
   showLoaderOverlay() {

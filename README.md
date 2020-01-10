@@ -21,5 +21,9 @@ I'm not using the Shadow DOM on purpose. Styles are a mess as a result.
 ## TODO
 - [ ] Test on all browsers
 - [ ] Don't forget to register the keyboard events
-- [ ] When using this, we should probably check for web component support first
+- [ ] We should probably check for web component support before trying to register the whole thing when using it in prod
+- [x] Disable overflow on the fullscreen overlay
+- [ ] Make a shadow DOM version
+- [ ] Add support for lightbox over an svg tag instead of img
+- [ ] Support for iframes would be really cool
 
