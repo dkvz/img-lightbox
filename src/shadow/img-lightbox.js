@@ -24,11 +24,33 @@ class ImgLightbox extends HTMLElement {
       this.fullImage = link.getAttribute('href');
       // Register a click event that has to 
       // prevent default:
-      link.addEventListener('click', this.showLightbox.bind(this));
+      this._addListeners(link);
     } else if (img) {
       this.fullImage = img.getAttribute('src');
-      img.addEventListener('click', this.showLightbox.bind(this));
+      // Nothing wrong with giving the same tabIndex
+      // to things, they're ordered by position.
+      // I think.
+      img.tabIndex = 0;
+      this._addListeners(img);
     }
+  }
+
+  _addListeners(el) {
+    el.addEventListener('click', this.showLightbox.bind(this));
+    el.addEventListener('keydown', (e) => {
+      // It's common to ignore anything with alt
+      // modifiers. I've copied this from Google
+      // people.
+      if (e.altKey) return;
+      // Catch enter and space:
+      switch (e.keyCode) {
+        case 13:
+        case 32:
+          this.showLightbox();
+        default:
+          return;
+      }
+    });
   }
 
   showLightbox(e) {
@@ -47,6 +69,9 @@ class ImgLightbox extends HTMLElement {
         // Prepare the events to close the overlay.
         // I'm doing this here to light up what's
         // happening in connectedCallback.
+        // I'm not doing a check for which key was
+        // called on purpose, but maybe I should do
+        // that alt key check?
         ['click', 'keydown'].forEach(
           (type) => 
             this.overlay.addEventListener(
@@ -86,6 +111,8 @@ class ImgLightbox extends HTMLElement {
 
 // The loader image should be cached, inlining it
 // will create tons of copies of SVG nodes.
+// The strange comment here is needed for syntax
+// highlighting with a VS Code extension I'm using.
 ImgLightbox.prototype.template = /*template*/`
 <style>
   :host {

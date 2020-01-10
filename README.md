@@ -85,20 +85,40 @@ I'm not married to Parcel but I don't have time to fight bundlers right now.
 
 I hear this is a good one for libs: https://github.com/developit/microbundle - Might integrate in the future.
 
+### Accessibility
+Links seem to respond to both enter and space (differently? But whatever).
+
+Key codes (found in `event.keyCode`) are as follows:
+```js
+const KEYCODE = {
+  SPACE: 32,
+  ENTER: 13,
+};
+```
+
+In their examples the Chrome team seem to ignore any input that has the Alt key pressed as in:
+```js
+if (event.altKey)
+  return;
+```
+
+**Note**: When using any key press to escape the lightbox modal situation, focus is not restored to what had it previously. I personally like it that way but I'm not using a screen reader so I don't know.
+
 ## Resources and copyright notices
 - The hourglass icon has been modified from the GPL-licensed file here: https://fr.wikipedia.org/wiki/Fichier:Circle-icons-hourglass.svg
 
 ## TODO
 - [ ] Test on all browsers
 - [ ] Write tests
-- [ ] Don't forget to register the keyboard events
+- [x] Don't forget to register the keyboard events
 - [ ] Use template tags, they say it's better (here)[https://github.com/GoogleChromeLabs/howto-components/blob/master/elements/howto-checkbox/howto-checkbox.js]
 - [ ] Document how to check for web component browser support
 - [x] Disable overflow on the fullscreen overlay
 - [x] Make a shadow DOM version
+- [ ] To maximize accessibility we need some kind of focus outline
 - [ ] Add support for lightbox over an svg tag instead of img
 - [ ] Support for iframes would be really cool
-- [ ] Link the repo in package.json
+- [x] Link the repo in package.json
 - [ ] Put on npm when a little more mature, add a gif to show what this does
-- [ ] Building as a lib is not exactly optimal - see README section about using the component
+- [ ] Building as a lib might not be optimal - see README section about using the component
 

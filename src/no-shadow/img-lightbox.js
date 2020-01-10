@@ -13,13 +13,35 @@ class ImgLightbox extends HTMLElement {
       this.fullImage = link.getAttribute('href');
       // Register a click event that has to 
       // prevent default:
-      link.addEventListener('click', this.showLightbox.bind(this));
+      this._addListeners(link);
     } else if (img) {
       this.fullImage = img.getAttribute('src');
-      img.addEventListener('click', this.showLightbox.bind(this));
+      // Nothing wrong with giving the same tabIndex
+      // to things, they're ordered by position.
+      // I think.
+      img.tabIndex = 0;
+      this._addListeners(img);
     }
     // Add the loading overlay:
     this._addLoadingOverlay();
+  }
+
+  _addListeners(el) {
+    el.addEventListener('click', this.showLightbox.bind(this));
+    el.addEventListener('keydown', (e) => {
+      // It's common to ignore anything with alt
+      // modifiers. I've copied this from Google
+      // people.
+      if (e.altKey) return;
+      // Catch enter and space:
+      switch (e.keyCode) {
+        case 13:
+        case 32:
+          this.showLightbox();
+        default:
+          return;
+      }
+    });
   }
 
   _addLoadingOverlay() {
@@ -92,7 +114,10 @@ class ImgLightbox extends HTMLElement {
       img.tabIndex = 1;
       this.overlay.appendChild(img);
 
-      // Prepare the events to close the overlay:
+      // Prepare the events to close the overlay.
+      // I'm not doing a check for which key was
+      // called on purpose, but maybe I should do
+      // that alt key check?
       const closeOverlay = (e) =>         
         e.currentTarget.style.display = 'none';
       ['click', 'keydown'].forEach(
