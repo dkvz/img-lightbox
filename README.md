@@ -47,7 +47,7 @@ To manually use it in some page, you could do something like this:
   customElements.define('img-lightbox', ImgLightbox.default);
 </script>
 ```
-The loading icon SVG file has to be present in the library folder too.
+The loading icon SVG file is normally not necessary but since I change my mind all the time about it you might want to copy it along anyway.
 
 To use the component in a web page, you're expected to put at least an img tag inside of it.
 
@@ -71,20 +71,30 @@ I started the project with the intention to not use the shadow DOM but the style
 
 I'm using the (es6-string-html)[https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html] VS Code extension to syntax highlight my templates, which is why there's somethings a `/*template*/` comment before string literals in the code.
 
+### Static assets
+The loading icon is currently inlined as a base64 data URL through using the `parcel-plugin-url-loader` Parcel plugin with default options.
+
+I used to keep it as a separate file but then I needed some kind of option to tell the class where the assets root is.
+
+My concern was that if you have many of these components, the data URL string gets copied a lot of times in memory. And I think that's kind of happening since it's cloned in many shadow DOM instances.
+
+Will be something to possibly optimize later.
+
 ### Using something else than parcel to build
 I'm not married to Parcel but I don't have time to fight bundlers right now.
 
 I hear this is a good one for libs: https://github.com/developit/microbundle - Might integrate in the future.
 
-## Resources
+## Resources and copyright notices
 - The hourglass icon has been modified from the GPL-licensed file here: https://fr.wikipedia.org/wiki/Fichier:Circle-icons-hourglass.svg
 
 ## TODO
 - [ ] Test on all browsers
+- [ ] Write tests
 - [ ] Don't forget to register the keyboard events
-- [ ] We should probably check for web component support before trying to register the whole thing when using it in prod
+- [ ] Document how to check for web component browser support
 - [x] Disable overflow on the fullscreen overlay
-- [ ] Make a shadow DOM version
+- [x] Make a shadow DOM version
 - [ ] Add support for lightbox over an svg tag instead of img
 - [ ] Support for iframes would be really cool
 - [ ] Link the repo in package.json

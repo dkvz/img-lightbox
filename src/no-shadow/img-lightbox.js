@@ -129,7 +129,6 @@ class ImgLightbox extends HTMLElement {
 // the shadow DOM version.
 // Eagerly creating all these elements on page with lots of img-lightbox elements
 // would be a really bad idea.
-// This should not be inlined anyway. MAKE SURE IT'S NOT BEING INLINED.
 ImgLightbox.prototype.loaderSvgUrl = require('../../assets/hourglass.svg');
 
 export default ImgLightbox;
