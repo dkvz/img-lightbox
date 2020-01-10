@@ -92,6 +92,7 @@ I hear this is a good one for libs: https://github.com/developit/microbundle - M
 - [ ] Test on all browsers
 - [ ] Write tests
 - [ ] Don't forget to register the keyboard events
+- [ ] Use template tags, they say it's better (here)[https://github.com/GoogleChromeLabs/howto-components/blob/master/elements/howto-checkbox/howto-checkbox.js]
 - [ ] Document how to check for web component browser support
 - [x] Disable overflow on the fullscreen overlay
 - [x] Make a shadow DOM version
