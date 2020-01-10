@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing the lightbox</title>
+</head>
+<body>
+  <h1>Bleurp</h1>
+
+  <img-lightbox>
+    <a href="https://capricartes.dkvz.eu/static/crapic_26eb8c8f.png" target="_blank" rel="noopener noreferrer">
+      <img src="https://capricartes.dkvz.eu/static/crapic_2_previewf607624.png" />
+    </a>
+  </img-lightbox>
+
+  <script src="img-lightbox/img-lightbox.js"></script>
+  <script>
+    customElements.define('img-lightbox', ImgLightbox.default);
+  </script>
+
+</body>
+</html>

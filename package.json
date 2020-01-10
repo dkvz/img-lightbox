@@ -5,9 +5,9 @@
   "main": "src/img-lightbox.js",
   "scripts": {
     "start": "parcel src/shadow/index.pug",
-    "build": "parcel build src/shadow/img-lightbox.js --public-url ./",
+    "build": "parcel build src/shadow/img-lightbox.js --public-url ./ --global ImgLightbox",
     "start-no-shadow": "parcel src/no-shadow/index.pug",
-    "build-no-shadow": "parcel build src/no-shadow/img-lightbox.js --public-url ./"
+    "build-no-shadow": "parcel build src/no-shadow/img-lightbox.js --public-url ./ --global ImgLightbox"
   },
   "author": "dkvz",
   "license": "MIT",
