@@ -1,3 +1,5 @@
+const loaderSvgUrl = require('../../assets/hourglass.svg');
+
 class ImgLightbox extends HTMLElement {
 
   constructor() {
@@ -7,7 +9,14 @@ class ImgLightbox extends HTMLElement {
   }
 
   connectedCallback() {
+    // Template is added to prototype below the 
+    // class definition.
     this.shadowRoot.innerHTML = this.template;
+    // Get some element references from shadow DOM:
+    this.overlay = this.shadowRoot.querySelector('#overlay');
+    this.loadingOverlay = this.shadowRoot.querySelector('#loader');
+    // The slotted elements are actually not in 
+    // the shadow DOM so we can get them like so:
     const link = this.querySelector('a');
     const img = this.querySelector('img');
     if (link) {
@@ -20,26 +29,6 @@ class ImgLightbox extends HTMLElement {
       this.fullImage = img.getAttribute('src');
       img.addEventListener('click', this.showLightbox.bind(this));
     }
-    // Add the loading overlay:
-    this._addLoadingOverlay();
-  }
-
-  _addLoadingOverlay() {
-    // This could be rewritten in a way more clever manner.
-    this.style.position = 'relative';
-    this.loadingOverlay = document.createElement('div');
-    this.loadingOverlay.style.position = 'absolute';
-    this.loadingOverlay.style.zIndex = 1;
-    this.loadingOverlay.style.top = '0';
-    this.loadingOverlay.style.left = '0';
-    this.loadingOverlay.style.width = '100%';
-    this.loadingOverlay.style.height = '100%';
-    this.loadingOverlay.style.backgroundColor = 'rgba(0,0,0,.2)';
-    this.loadingOverlay.style.alignItems = 'center';
-    this.loadingOverlay.style.justifyContent = 'center';
-    this.loadingOverlay.innerHTML = this.loaderSvg;
-    this.hideLoaderOverlay();
-    this.shadowRoot.appendChild(this.loadingOverlay);
   }
 
   showLightbox(e) {
@@ -49,109 +38,110 @@ class ImgLightbox extends HTMLElement {
       this.loading = true;
       // Preload the full image.
       // Show the spinner overlay:
-      this.showLoaderOverlay();
+      this._showOverlay(this.loadingOverlay);
       if (!this.img) {
-        this.img = new Image();
+        this.img = document.createElement('img');
+        this.img.addEventListener('load', () => this.showImage());
         this.img.src = this.fullImage;
-        this.img.addEventListener('load', () => this.showImage(this.img));
+        this.img.tabIndex = 1;
+        // Prepare the events to close the overlay.
+        // I'm doing this here to light up what's
+        // happening in connectedCallback.
+        ['click', 'keydown'].forEach(
+          (type) => 
+            this.overlay.addEventListener(
+              type, 
+              (e) => this._hideOverlay(e.currentTarget)
+            )
+        );
+        this.overlay.appendChild(this.img);
       } else {
-        this.showImage(this.img);
+        this.showImage();
       }
     }
   }
 
-  showImage(img) {
-
-    // Add the overlay if it doesn't exist:
-    if (!this.overlay) {
-      // Create the overlay with a whole bunch
-      // of inline styles.
-      // I'm so sorry.
-      this.overlay = document.createElement('div');
-      this.overlay.style.position = 'fixed';
-      this.overlay.style.top = '0';
-      this.overlay.style.left = '0';
-      this.overlay.style.bottom = '0';
-      this.overlay.style.right = '0';
-      this.overlay.style.overflow = 'hidden';
-      this.overlay.style.zIndex = 999;
-      this.overlay.style.backgroundColor = 'rgba(0,0,0,.5)';
-      this.overlay.style.display = 'none';
-      this.overlay.style.alignItems = 'center';
-      this.overlay.style.justifyContent = 'center';
-      this.overlay.tabIndex = 0;
-
-      // Add the image + transition
-      img.style.maxWidth = '100%';
-      img.style.maxHeight = '100%';
-      img.style.transition = 'transform 0.8s';
-      img.tabIndex = 1;
-      this.overlay.appendChild(img);
-
-      // Prepare the events to close the overlay:
-      const closeOverlay = (e) =>         
-        e.currentTarget.style.display = 'none';
-      ['click', 'keydown'].forEach(
-        (type) => this.overlay.addEventListener(type, closeOverlay)
-      );
-
-      this.shadowRoot.appendChild(this.overlay);
-    }
-    img.style.transform = 'scale(0.1)';
+  showImage() {
+    this.img.style.transform = 'scale(0.1)';
     // Hide the loading overlay:
-    this.hideLoaderOverlay();
-    this.overlay.style.display = 'flex';
+    this._hideOverlay(this.loadingOverlay);
+    this._showOverlay(this.overlay);
     // Focus the overlay (requires it to have a tabIndex):
     this.overlay.focus();
     // Start the CSS transition:
-    img.style.transform = 'scale(1)';
-
+    this.img.style.transform = 'scale(1)';
     // Don't forget to unlock the click event:
     this.loading = false;
   }
 
-  showLoaderOverlay() {
-    this.loadingOverlay.style.display = 'flex';
+  _showOverlay(overlay) {
+    overlay.style.display = 'flex';
   }
 
-  hideLoaderOverlay() {
-    this.loadingOverlay.style.display = 'none';
+  _hideOverlay(overlay) {
+    overlay.style.display = '';
   }
 
 }
 
-// We should still try to inline the loader with the
-// module bundler rahter than doing this.
+// The loader image should be cached, inlining it
+// will create tons of copies of SVG nodes.
 ImgLightbox.prototype.template = /*template*/`
 <style>
   :host {
     display: inline-block;
+    cursor: pointer;
+    position: relative;
+  }
+
+  #loader {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.2);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: 999;
+    background-color: rgba(0,0,0,.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #loader img {
+    width: 50%;
+    opacity: 0.6;
+    animation: lightbox-loader 2s infinite;
+  }
+
+  #overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.8s;
+  }
+
+  @keyframes lightbox-loader {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
   }
 </style>
-<slot />
-<div id="overlay">
-  
-</div>
+<slot></slot>
+<div id="overlay" tabindex="0"></div>
 <div id="loader">
-  <svg enable-background="new 0 0 64 64" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><metadata><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata>
-  <g>
-      <circle class="st0" cx="32" cy="32" r="32"/>
-    </g><g class="st1" opacity=".2">
-      <path class="st2" d="m46 50h-2v-4c0-4.5-3-7.4-3-7.4s-3-2.8-3.9-3.7 0-1.8 0-1.8 1.3-1.3 4.2-4c2.8-2.7 2.7-6.7 2.7-6.7v-5.1l-12-1-12 1v5.1s-0.1 3.9 2.7 6.7c2.8 2.7 4.2 4 4.2 4s0.9 0.9 0 1.8-3.9 3.7-3.9 3.7-3 2.8-3 7.4v4h-2c-1.1 0-2 0.9-2 2s0.9 2 2 2h28c1.1 0 2-0.9 2-2s-0.9-2-2-2z" fill="#231f20"/>
-    </g>
-      <path class="st3" d="m41 36.6s-3-2.8-3.9-3.7 0-1.8 0-1.8 1.3-1.3 4.2-4c2.8-2.7 2.7-6.7 2.7-6.7v-5.1l-12-1-12 1v5.1s-0.1 3.9 2.7 6.7c2.8 2.7 4.2 4 4.2 4s0.9 0.9 0 1.8-3.9 3.7-3.9 3.7-3 2.8-3 7.4v5.1h24v-5.1c0-4.5-3-7.4-3-7.4z" fill="#fff"/>
-    
-      <path class="st4" d="m31 43v-11c0-2.1-1-3.4-1.3-3.7l-4.2-4c-1.5-1.4-1.5-3.7-1.5-3.7h16s0 2.3-1.5 3.7l-4.2 4c-0.4 0.3-1.3 1.6-1.3 3.7v11z"/>
-    <g class="st5" opacity=".3">
-      <path class="st2" d="m48 16c0 1.1-0.9 2-2 2h-28c-1.1 0-2-0.9-2-2s0.9-2 2-2h28c1.1 0 2 0.9 2 2z" fill="#231f20"/>
-    </g><g fill="#fff">
-      <path class="st6" d="m48 14c0 1.1-0.9 2-2 2h-28c-1.1 0-2-0.9-2-2s0.9-2 2-2h28c1.1 0 2 0.9 2 2z" fill="#fff"/>
-    </g><g fill="#fff">
-      <path class="st6" d="m48 50c0 1.1-0.9 2-2 2h-28c-1.1 0-2-0.9-2-2s0.9-2 2-2h28c1.1 0 2 0.9 2 2z" fill="#fff"/>
-    </g><g>
-      <polygon class="st4" points="23 48 23 48 32 40 41 48"/>
-    </g>
-  </svg>
+  <img src="${loaderSvgUrl}">
 </div>
 `;
 

@@ -36,4 +36,5 @@ I'm using the (es6-string-html)[https://marketplace.visualstudio.com/items?itemN
 - [ ] Add support for lightbox over an svg tag instead of img
 - [ ] Support for iframes would be really cool
 - [ ] Link the repo in package.json
+- [ ] Put on npm when a little more mature, add a gif to show what this does
 
