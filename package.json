@@ -2,7 +2,7 @@
   "name": "img-lightbox",
   "version": "0.1.0",
   "description": "Web component to add a lightbox effect to img elements",
-  "main": "src/shadow/img-lightbox.js",
+  "main": "dist/img-lightbox.js",
   "scripts": {
     "start": "parcel src/shadow/index.pug",
     "build": "parcel build src/shadow/img-lightbox.js --public-url ./ --global ImgLightbox",
