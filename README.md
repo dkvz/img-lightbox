@@ -20,7 +20,7 @@ customElements.define('img-lightbox', ImgLightbox);
 
 To use the component in a web page, you're expected to put at least an img tag inside of it.
 
-It's however best to enclose the img in a link as in the example you'll find in `src/shared/testpage.html`:
+It's however best to enclose the img in a link, like so:
 
 ```html
 <img-lightbox>
@@ -124,4 +124,5 @@ if (event.altKey)
 - [ ] Support for iframes would be really cool
 - [x] Link the repo in package.json
 - [ ] Add a gif to show what this does - A codepen link would also work
+- [ ] Add the minified uncompressed bundle size to the README introduction
 
