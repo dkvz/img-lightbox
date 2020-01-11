@@ -5,49 +5,18 @@ The idea is that it should still display the image and link to the full sized on
 
 I quickly made this in regard to a blog article I was writing, it could be improved **a lot**.
 
-## Build requirements
-* Node.js
-
-## Installing dependencies
-Run:
+## Using the component from npm
+To use it in a project with a module bundler, install the dependency first:
 ```
-npm install
+npm install -D @dkvz/img-lightbox
 ```
 
-## Using the component
-To use it in a project with a module bundler, just copy this repo or clone it as a submodule and require/import the 'img-lightbox.js' that suits you in your project.
-
-You then have to register the web component at some point.
-
-The code could look like this:
+Import it in the relevant entrypoint and register it into the browser window object:
 ```js
-import ImgLightbox from './img-lightbox';
+import ImgLightbox from '@dkvz/img-lightbox';
 
 customElements.define('img-lightbox', ImgLightbox);
 ```
-
-For any other uses you have to build the "library" first. I started this whole thing with Parcel because that was easy to get going but it's probably not the best at building "libraries".
-
-The build scripts will create browser ready bundles, except that **the component prototype will be available through ImgLightbox.default**.
-
-Build using either:
-```
-npm run build
-```
-For the shadow DOM version and :
-```
-npm run build-no-shadow
-```
-For the version that does not use the shadow DOM API at all.
-
-To manually use it in some page, you could do something like this:
-```html
-<script src="PATH_TO_SCRIPT/img-lightbox.js"></script>
-<script>
-  customElements.define('img-lightbox', ImgLightbox.default);
-</script>
-```
-The loading icon SVG file is normally not necessary but since I change my mind all the time about it you might want to copy it along anyway.
 
 To use the component in a web page, you're expected to put at least an img tag inside of it.
 
@@ -62,7 +31,42 @@ It's however best to enclose the img in a link as in the example you'll find in 
 </img-lightbox>
 ```
 
-For both the shadow DOM and no-shadow DOM versions you'll probably want to add some styling to the element as shown in the respective example index.pug files.
+You'll probably want to add some styling to the element in your global styles as it doesn't have any by default.
+
+## Building the component
+
+### Build requirements
+* Node.js
+
+### Installing dependencies
+Run:
+```
+npm install
+```
+
+### Build process
+The build scripts will create browser ready bundles, except that **the component prototype will be available through ImgLightbox.default**, which is expected by module bundler but requires using ImgLightbox.default when using it directly in a web page with no module bundler.
+
+Build using either:
+```
+npm run build
+```
+For the shadow DOM (default) version and:
+```
+npm run build-no-shadow
+```
+For the version that does not use the shadow DOM API at all.
+
+You'll find the build script in the `dist` folder.
+
+To manually use it in some page, you could do something like this:
+```html
+<script src="PATH_TO_SCRIPT/img-lightbox.js"></script>
+<script>
+  customElements.define('img-lightbox', ImgLightbox.default);
+</script>
+```
+The loading icon SVG file is normally not necessary but since I change my mind all the time about it you might want to copy it along anyway.
 
 The no-shadow DOM version also requires extra styles to work. See `src/no-shadow/index.pug`.
 
@@ -109,7 +113,7 @@ if (event.altKey)
 
 ## TODO
 - [ ] Test on all browsers
-- [ ] Write tests - Gotta do research on how to test web components
+- [ ] Write tests - Probably going to need jsdom
 - [x] Don't forget to register the keyboard events
 - [x] Use template tags, they say it's better (here)[https://github.com/GoogleChromeLabs/howto-components/blob/master/elements/howto-checkbox/howto-checkbox.js]
 - [ ] Document how to check for web component browser support
@@ -119,6 +123,5 @@ if (event.altKey)
 - [ ] Add support for lightbox over an svg tag instead of img
 - [ ] Support for iframes would be really cool
 - [x] Link the repo in package.json
-- [ ] Put on npm when a little more mature, add a gif to show what this does
-- [ ] Building as a lib might not be optimal - see README section about using the component
+- [ ] Add a gif to show what this does - A codepen link would also work
 
