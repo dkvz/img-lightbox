@@ -5,6 +5,8 @@ The idea is that it should still display the image and link to the full sized on
 
 I quickly made this in regard to a blog article I was writing, it could be improved **a lot**.
 
+Uncompressed minified size: 8.5Kb including the loading spinner image.
+
 ## Using the component from npm
 To use it in a project with a module bundler, install the dependency first:
 ```
