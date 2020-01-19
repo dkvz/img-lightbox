@@ -37,6 +37,13 @@ It's however best to enclose the img in a link, like so:
 
 You'll probably want to add some styling to the element in your global styles as it doesn't have any by default.
 
+The component sets up a default outline on focus, but you might want to add your own globally (which will trump the default one) like so:
+```css
+img-lightbox:active, img-lightbox:focus {
+  outline: 2px solid rgba(20, 20, 200, 0.65);
+}
+```
+
 ## Building the component
 
 ### Build requirements
@@ -123,10 +130,10 @@ if (event.altKey)
 - [ ] Document how to check for web component browser support
 - [x] Disable overflow on the fullscreen overlay
 - [x] Make a shadow DOM version
-- [ ] To maximize accessibility we need some kind of focus outline
+- [x] To maximize accessibility we need some kind of focus outline
 - [ ] Add support for lightbox over an svg tag instead of img
 - [ ] Support for iframes would be really cool
 - [x] Link the repo in package.json
 - [ ] Add a gif to show what this does - A codepen link would also work
-- [ ] Add the minified uncompressed bundle size to the README introduction
+- [x] Add the minified uncompressed bundle size to the README introduction
 

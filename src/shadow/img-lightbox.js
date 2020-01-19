@@ -19,6 +19,8 @@ class ImgLightbox extends HTMLElement {
     // Get some element references from shadow DOM:
     this.overlay = this.shadowRoot.querySelector('#overlay');
     this.loadingOverlay = this.shadowRoot.querySelector('#loader');
+    // Component needs a tabIndex to be focusable.
+    this.tabIndex = 0;
     // The slotted elements are actually not in 
     // the shadow DOM so we can get them like so:
     const link = this.querySelector('a');
@@ -28,20 +30,23 @@ class ImgLightbox extends HTMLElement {
       this.fullImage = link.getAttribute('href');
       // Register a click event that has to 
       // prevent default:
-      this._addListeners(link);
+      //this._addListeners(link);
+      // Prevent ability to focus the link:
+      link.tabIndex = -1;
     } else if (img) {
       this.fullImage = img.getAttribute('src');
       // Nothing wrong with giving the same tabIndex
       // to things, they're ordered by position.
       // I think.
-      img.tabIndex = 0;
-      this._addListeners(img);
+      //img.tabIndex = 0;
+      //this._addListeners(img);
     }
+    this.fullImage && this._addListeners();
   }
 
-  _addListeners(el) {
-    el.addEventListener('click', this.showLightbox.bind(this));
-    el.addEventListener('keydown', (e) => {
+  _addListeners() {
+    this.addEventListener('click', this.showLightbox.bind(this), true);
+    this.addEventListener('keydown', (e) => {
       // It's common to ignore anything with alt
       // modifiers. I've copied this from Google
       // people.
@@ -50,15 +55,18 @@ class ImgLightbox extends HTMLElement {
       switch (e.keyCode) {
         case 13:
         case 32:
-          this.showLightbox();
+          this.showLightbox(e);
         default:
           return;
       }
-    });
+    }, true);
   }
 
   showLightbox(e) {
+    // This is required so that the link element does not get 
+    // followed:
     e.preventDefault();
+
     // Implement some kind of lock:
     if (!this.loading) {
       this.loading = true;
@@ -125,6 +133,14 @@ tpl.innerHTML = /*template*/`
     display: inline-block;
     cursor: pointer;
     position: relative;
+  }
+
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host(:focus), :host(:active) {
+    outline: 2px solid #77b;
   }
 
   #loader {
