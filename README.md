@@ -1,6 +1,8 @@
 # img-lightbox
 Web Component / Custom Element with no dependencies to make a lightbox effect around images.
 
+Check out the [demo](https://dkvz.eu/stuff/img-lightbox-demo/)
+
 The idea is that it should still display the image and link to the full sized one if JS is disabled, hasn't loaded for some reason, or if web components are not supported.
 
 I quickly made this in regard to a blog article I was writing, it could be improved **a lot**.
