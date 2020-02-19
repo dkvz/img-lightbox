@@ -44,6 +44,13 @@ img-lightbox:active, img-lightbox:focus {
 }
 ```
 
+You also may have strange spacing issues if the a and img elements have their default "inline" display mode. Which could be changed like so:
+```css
+img-lightbox a, img-lightbox img {
+  display: block;
+}
+```
+
 ## Building the component
 
 ### Build requirements

@@ -1,5 +1,5 @@
 .cache
 dirty-tests
-assets/example.png
-assets/example_preview.png
+assets/example.*
+assets/example_preview.*
 assets/Circle-icons-hourglass.svg
