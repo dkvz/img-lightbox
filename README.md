@@ -51,6 +51,15 @@ img-lightbox a, img-lightbox img {
 }
 ```
 
+This is also where you should set any max-width or max-height. Or you could set it on img-lightbox itself but then you need to set width and height to 100% as in:
+```css
+img-lightbox a, img-lightbox img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+```
+
 ## Building the component
 
 ### Build requirements
