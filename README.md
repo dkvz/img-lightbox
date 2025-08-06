@@ -141,6 +141,15 @@ if (event.altKey)
 ## Upgrade to parcel 2
 The doc: https://parceljs.org/migration/parcel-1/
 
+I removed all of these deps:
+```
+"parcel-bundler": "^1.12.4",
+"parcel-plugin-clean-dist": "0.0.6",
+"parcel-plugin-url-loader": "^1.3.1",
+```
+
+Then added the latest parcel through npm install. 
+
 ## TODO
 - [ ] Test on all browsers
 - [ ] Write tests - Probably going to need jsdom
