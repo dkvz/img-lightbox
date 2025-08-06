@@ -138,6 +138,9 @@ if (event.altKey)
 ## Resources and copyright notices
 - The hourglass icon has been modified from the GPL-licensed file here: https://fr.wikipedia.org/wiki/Fichier:Circle-icons-hourglass.svg
 
+## Upgrade to parcel 2
+The doc: https://parceljs.org/migration/parcel-1/
+
 ## TODO
 - [ ] Test on all browsers
 - [ ] Write tests - Probably going to need jsdom
