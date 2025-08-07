@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Web component to add a lightbox effect to img elements",
   "main": "dist/img-lightbox.js",
+  "module": "dist/img-lightbox.mjs",
+  "source": "src/shadow/img-lightbox.js",
   "scripts": {
     "start": "parcel src/shadow/index.pug",
     "build": "parcel build src/shadow/img-lightbox.js --public-url ./",
+    "build-new": "parcel build",
     "start-no-shadow": "parcel src/no-shadow/index.pug",
     "build-no-shadow": "parcel build src/no-shadow/img-lightbox.js --public-url ./"
   },
