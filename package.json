@@ -7,8 +7,7 @@
   "source": "src/shadow/img-lightbox.js",
   "scripts": {
     "start": "parcel src/shadow/index.pug",
-    "build": "parcel build src/shadow/img-lightbox.js --public-url ./",
-    "build-new": "parcel build",
+    "build": "parcel build",
     "start-no-shadow": "parcel src/no-shadow/index.pug",
     "build-no-shadow": "parcel build src/no-shadow/img-lightbox.js --public-url ./"
   },

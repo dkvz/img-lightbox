@@ -78,11 +78,6 @@ Build using either:
 ```
 npm run build
 ```
-For the shadow DOM (default) version and:
-```
-npm run build-no-shadow
-```
-For the version that does not use the shadow DOM API at all.
 
 You'll find the build script in the `dist` folder.
 
@@ -93,7 +88,19 @@ To manually use it in some page, you could do something like this:
   customElements.define('img-lightbox', ImgLightbox.default);
 </script>
 ```
+**Update 2025**: There is a .mjs file built as well and it might be a good idea to use that one (with `type="module" in the script tag`).
+
 The loading icon SVG file is normally not necessary but since I change my mind all the time about it you might want to copy it along anyway.
+
+## Build without shadow DOM
+In the past I had a way to build the component without using the shadow DOM at all, which has a few consequences but I think the main idea was to support some old browsers.
+
+Anyway, after upgrading Parcel to v2 I didn't take time to fix the build command for the no-shadow DOM version.
+
+It used to be:
+```
+npm run build-no-shadow
+```
 
 The no-shadow DOM version also requires extra styles to work. See `src/no-shadow/index.pug`.
 
