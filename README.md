@@ -157,7 +157,7 @@ I removed all of these deps:
 
 Then added the latest parcel through npm install. 
 
-The clean plugin is now useless, and I'm pretty sure the URL loader is included.
+I need to add a manual wipe of the dist folder before the build commands.
 
 ## TODO
 - [ ] Test on all browsers
