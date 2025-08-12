@@ -157,14 +157,13 @@ I removed all of these deps:
 
 Then added the latest parcel through npm install. 
 
-I need to add a manual wipe of the dist folder before the build commands.
+I need to add a manual wipe of the dist folder before the build commands, doing a quick rimraf for now.
 
 ## TODO
 - [ ] Test on all browsers
 - [ ] Write tests - Probably going to need jsdom
 - [x] Don't forget to register the keyboard events
 - [x] Use template tags, they say it's better (here)[https://github.com/GoogleChromeLabs/howto-components/blob/master/elements/howto-checkbox/howto-checkbox.js]
-- [ ] Document how to check for web component browser support
 - [x] Disable overflow on the fullscreen overlay
 - [x] Make a shadow DOM version
 - [x] To maximize accessibility we need some kind of focus outline

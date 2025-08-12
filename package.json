@@ -7,7 +7,7 @@
   "source": "src/shadow/img-lightbox.js",
   "scripts": {
     "start": "parcel src/shadow/index.pug",
-    "build": "parcel build",
+    "build": "rimraf dist && parcel build",
     "start-no-shadow": "parcel src/no-shadow/index.pug",
     "build-no-shadow": "parcel build src/no-shadow/img-lightbox.js --public-url ./"
   },
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@parcel/transformer-pug": "^2.15.4",
     "parcel": "^2.15.4",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "rimraf": "^6.0.1"
   }
 }
