@@ -9,6 +9,8 @@ I quickly made this in regard to a blog article I was writing, it could be impro
 
 Uncompressed minified size: 8.5Kb including the loading spinner image.
 
+**Note**: we no longer minify the build - It seems to be standard practice for libraries nowadays.
+
 ## Using the component from npm
 To use it in a project with a module bundler, install the dependency first:
 ```
