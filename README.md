@@ -159,6 +159,8 @@ Then added the latest parcel through npm install.
 
 I need to add a manual wipe of the dist folder before the build commands, doing a quick rimraf for now.
 
+I also had to change how the loading SVG gets inlined. It's now imported as a string.
+
 ## TODO
 - [ ] Test on all browsers
 - [ ] Write tests - Probably going to need jsdom

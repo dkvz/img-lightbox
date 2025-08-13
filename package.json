@@ -18,6 +18,7 @@
   "author": "dkvz",
   "license": "MIT",
   "devDependencies": {
+    "@parcel/transformer-inline-string": "^2.15.4",
     "@parcel/transformer-pug": "^2.15.4",
     "parcel": "^2.15.4",
     "pug": "^2.0.4",

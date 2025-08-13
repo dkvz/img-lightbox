@@ -1,11 +1,12 @@
-const loaderSvgUrl = require('../../assets/hourglass.svg');
+// const loaderSvgUrl = require('../../assets/hourglass.svg');
+import loaderSvg from 'bundle-text:../../assets/hourglass.svg';
 
 class ImgLightbox extends HTMLElement {
 
   constructor() {
     super();
     this.loading = false;
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
@@ -19,6 +20,8 @@ class ImgLightbox extends HTMLElement {
     // Get some element references from shadow DOM:
     this.overlay = this.shadowRoot.querySelector('#overlay');
     this.loadingOverlay = this.shadowRoot.querySelector('#loader');
+    // Add the loading SVG to that element:
+    this.loadingOverlay.innerHTML = loaderSvg;
     // Component needs a tabIndex to be focusable.
     this.tabIndex = 0;
     // The slotted elements are actually not in 
@@ -85,9 +88,9 @@ class ImgLightbox extends HTMLElement {
         // called on purpose, but maybe I should do
         // that alt key check?
         ['click', 'keydown'].forEach(
-          (type) => 
+          (type) =>
             this.overlay.addEventListener(
-              type, 
+              type,
               (e) => this._hideOverlay(e.currentTarget)
             )
         );
@@ -190,7 +193,6 @@ tpl.innerHTML = /*template*/`
 <slot></slot>
 <div id="overlay" tabindex="0"></div>
 <div id="loader">
-  <img src="${loaderSvgUrl}">
 </div>
 `;
 ImgLightbox.prototype.template = tpl;
