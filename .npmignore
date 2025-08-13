@@ -1,4 +1,5 @@
 .cache
+.parcel-cache
 dirty-tests
 assets/example.*
 assets/example_preview.*

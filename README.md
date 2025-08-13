@@ -9,6 +9,8 @@ I quickly made this in regard to a blog article I was writing, it could be impro
 
 Uncompressed minified size: 8.5Kb including the loading spinner image.
 
+**Note**: we no longer minify the build - It seems to be standard practice for libraries nowadays.
+
 ## Using the component from npm
 To use it in a project with a module bundler, install the dependency first:
 ```
@@ -78,11 +80,6 @@ Build using either:
 ```
 npm run build
 ```
-For the shadow DOM (default) version and:
-```
-npm run build-no-shadow
-```
-For the version that does not use the shadow DOM API at all.
 
 You'll find the build script in the `dist` folder.
 
@@ -93,7 +90,19 @@ To manually use it in some page, you could do something like this:
   customElements.define('img-lightbox', ImgLightbox.default);
 </script>
 ```
+**Update 2025**: There is a .mjs file built as well and it might be a good idea to use that one (with `type="module" in the script tag`).
+
 The loading icon SVG file is normally not necessary but since I change my mind all the time about it you might want to copy it along anyway.
+
+## Build without shadow DOM
+In the past I had a way to build the component without using the shadow DOM at all, which has a few consequences but I think the main idea was to support some old browsers.
+
+Anyway, after upgrading Parcel to v2 I didn't take time to fix the build command for the no-shadow DOM version.
+
+It used to be:
+```
+npm run build-no-shadow
+```
 
 The no-shadow DOM version also requires extra styles to work. See `src/no-shadow/index.pug`.
 
@@ -138,12 +147,27 @@ if (event.altKey)
 ## Resources and copyright notices
 - The hourglass icon has been modified from the GPL-licensed file here: https://fr.wikipedia.org/wiki/Fichier:Circle-icons-hourglass.svg
 
+## Upgrade to parcel 2
+The doc: https://parceljs.org/migration/parcel-1/
+
+I removed all of these deps:
+```
+"parcel-bundler": "^1.12.4",
+"parcel-plugin-clean-dist": "0.0.6",
+"parcel-plugin-url-loader": "^1.3.1",
+```
+
+Then added the latest parcel through npm install. 
+
+I need to add a manual wipe of the dist folder before the build commands, doing a quick rimraf for now.
+
+I also had to change how the loading SVG gets inlined. It's now imported as a string.
+
 ## TODO
 - [ ] Test on all browsers
 - [ ] Write tests - Probably going to need jsdom
 - [x] Don't forget to register the keyboard events
 - [x] Use template tags, they say it's better (here)[https://github.com/GoogleChromeLabs/howto-components/blob/master/elements/howto-checkbox/howto-checkbox.js]
-- [ ] Document how to check for web component browser support
 - [x] Disable overflow on the fullscreen overlay
 - [x] Make a shadow DOM version
 - [x] To maximize accessibility we need some kind of focus outline

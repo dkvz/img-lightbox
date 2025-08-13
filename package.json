@@ -1,13 +1,15 @@
 {
   "name": "@dkvz/img-lightbox",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Web component to add a lightbox effect to img elements",
   "main": "dist/img-lightbox.js",
+  "module": "dist/img-lightbox.mjs",
+  "source": "src/shadow/img-lightbox.js",
   "scripts": {
     "start": "parcel src/shadow/index.pug",
-    "build": "parcel build src/shadow/img-lightbox.js --public-url ./ --global ImgLightbox",
+    "build": "rimraf dist && parcel build",
     "start-no-shadow": "parcel src/no-shadow/index.pug",
-    "build-no-shadow": "parcel build src/no-shadow/img-lightbox.js --public-url ./ --global ImgLightbox"
+    "build-no-shadow": "parcel build src/no-shadow/img-lightbox.js --public-url ./"
   },
   "repository": {
     "type": "git",
@@ -16,9 +18,10 @@
   "author": "dkvz",
   "license": "MIT",
   "devDependencies": {
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-clean-dist": "0.0.6",
-    "parcel-plugin-url-loader": "^1.3.1",
-    "pug": "^2.0.4"
+    "@parcel/transformer-inline-string": "^2.15.4",
+    "@parcel/transformer-pug": "^2.15.4",
+    "parcel": "^2.15.4",
+    "pug": "^2.0.4",
+    "rimraf": "^6.0.1"
   }
 }
