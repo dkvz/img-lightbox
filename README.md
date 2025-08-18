@@ -147,22 +147,6 @@ if (event.altKey)
 ## Resources and copyright notices
 - The hourglass icon has been modified from the GPL-licensed file here: https://fr.wikipedia.org/wiki/Fichier:Circle-icons-hourglass.svg
 
-## Upgrade to parcel 2
-The doc: https://parceljs.org/migration/parcel-1/
-
-I removed all of these deps:
-```
-"parcel-bundler": "^1.12.4",
-"parcel-plugin-clean-dist": "0.0.6",
-"parcel-plugin-url-loader": "^1.3.1",
-```
-
-Then added the latest parcel through npm install. 
-
-I need to add a manual wipe of the dist folder before the build commands, doing a quick rimraf for now.
-
-I also had to change how the loading SVG gets inlined. It's now imported as a string.
-
 ## TODO
 - [ ] Test on all browsers
 - [ ] Write tests - Probably going to need jsdom
