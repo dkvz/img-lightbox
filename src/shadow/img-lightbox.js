@@ -173,7 +173,7 @@ tpl.innerHTML = /*template*/`
     justify-content: center;
   }
 
-  #loader img {
+  #loader svg {
     width: 50%;
     opacity: 0.6;
     animation: lightbox-loader 2s infinite;
