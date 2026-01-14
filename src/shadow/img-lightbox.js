@@ -28,7 +28,7 @@ class ImgLightbox extends HTMLElement {
     // the shadow DOM so we can get them like so:
     const link = this.querySelector('a');
     const img = this.querySelector('img');
-    if (link) {
+    if (link !== null) {
       // Store the URL as the full image URL:
       this.fullImage = link.getAttribute('href');
       // Register a click event that has to 
@@ -36,7 +36,7 @@ class ImgLightbox extends HTMLElement {
       //this._addListeners(link);
       // Prevent ability to focus the link:
       link.tabIndex = -1;
-    } else if (img) {
+    } else if (img !== null) {
       this.fullImage = img.getAttribute('src');
       // Nothing wrong with giving the same tabIndex
       // to things, they're ordered by position.
