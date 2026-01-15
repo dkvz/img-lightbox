@@ -1,6 +1,6 @@
 {
   "name": "@dkvz/img-lightbox",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Web component to add a lightbox effect to img elements",
   "main": "dist/img-lightbox.js",
   "module": "dist/img-lightbox.mjs",

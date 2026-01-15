@@ -78,6 +78,12 @@ class ImgLightbox extends HTMLElement {
       this._showOverlay(this.loadingOverlay);
       if (!this.img) {
         this.img = document.createElement('img');
+        // For the moment we just do nothing on error with
+        // the link target.
+        this.img.addEventListener('error', () => {
+          this._hideOverlay(this.loadingOverlay);
+          this.loading = false;
+        });
         this.img.addEventListener('load', () => this.showImage());
         this.img.src = this.fullImage;
         this.img.tabIndex = 1;
