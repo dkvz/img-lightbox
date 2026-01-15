@@ -180,7 +180,9 @@ tpl.innerHTML = /*template*/`
   }
 
   #loader svg {
-    width: 50%;
+    height: auto;
+    max-height: 99%;
+    max-width: 50%;
     opacity: 0.6;
     animation: lightbox-loader 2s infinite;
   }
